@@ -1423,7 +1423,7 @@
       /* Before/After Slider Mobile */
       .before-after-slider { padding: 0 20px; }
       .ba-item { flex: 0 0 100%; min-width: 280px; }
-      .ba-item img { height: 280px; }
+      .ba-item img { height: 320px; }
       
       /* Reviews Slider Mobile */
       .reviews-slider { padding: 0 20px; }
@@ -1459,6 +1459,65 @@
         right: 80px;
       }
       .chatbot-toggle i { font-size: 1.4rem; }
+    }
+
+    /* Small phones (480px and below) */
+    @media (max-width: 480px) {
+      .hero-right { height: 280px; }
+      .hero-left { padding: 40px 24px; }
+      .hero-title { font-size: clamp(1.8rem, 6vw, 2.2rem); }
+      .hero-desc { font-size: 0.9rem; }
+      
+      /* Stack buttons vertically */
+      .hero-actions { flex-direction: column; gap: 12px; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+      
+      /* Smaller section titles */
+      .section-title { font-size: clamp(1.6rem, 5vw, 2rem); }
+      
+      /* Adjust floating buttons for very small screens */
+      .whatsapp-btn {
+        bottom: 80px;
+        right: 16px;
+      }
+      .chatbot-toggle {
+        bottom: 16px;
+        right: 16px;
+      }
+      .chatbot-widget {
+        bottom: 140px;
+        max-height: 400px;
+      }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      #hero { min-height: auto; }
+      .hero-right { height: 200px; }
+      .hero-left { padding: 24px; }
+      .chatbot-widget { max-height: 300px; }
+    }
+
+    /* Accessibility - Respect user motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .reviews-track,
+      .ba-track {
+        animation: none;
+      }
+      .reveal,
+      .reveal-left,
+      .reveal-right {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .chatbot-message { animation: none; }
+      .hero-slideshow img { transition: none; }
+      .service-card,
+      .review-card,
+      .ba-item {
+        transition: none;
+      }
     }
   </style>
 </head>
