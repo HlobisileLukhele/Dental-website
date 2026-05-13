@@ -1067,6 +1067,39 @@
       transition: color 0.2s;
     }
 
+        /* ElevenLabs AI Voice Agent Styling */
+    .elevenlabs-container {
+      position: fixed;
+      bottom: 24px;
+      right: 100px;
+      z-index: 999;
+    }
+
+    .elevenlabs-container elevenlabs-convai {
+      transform: scale(0.85);
+      transform-origin: bottom right;
+    }
+
+    @media (max-width: 768px) {
+      .elevenlabs-container {
+        bottom: 16px;
+        right: 80px;
+      }
+      .elevenlabs-container elevenlabs-convai {
+        transform: scale(0.75);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .elevenlabs-container {
+        bottom: 80px;
+        right: 16px;
+      }
+      .elevenlabs-container elevenlabs-convai {
+        transform: scale(0.7);
+      }
+    }
+
     .footer-legal a:hover { color: var(--mint); }
 
     /* ═══════════════════════════════════════════
@@ -2326,176 +2359,11 @@
 
 </script>
 
-<!-- Chatbot Widget -->
-<button class="chatbot-toggle" id="chatbotToggle" aria-label="Open chat">
-  <i class="fa-solid fa-comments"></i>
-  <span class="chatbot-badge">1</span>
-</button>
-
-<div class="chatbot-widget" id="chatbotWidget">
-  <div class="chatbot-header">
-    <div class="chatbot-icon">
-      <i class="fa-solid fa-tooth"></i>
-    </div>
-    <div class="chatbot-title">
-      <h4>BrightWave Dental</h4>
-      <span>We reply immediately</span>
-    </div>
-    <button class="chatbot-close" id="chatbotClose" aria-label="Close chat">
-      <i class="fa-solid fa-times"></i>
-    </button>
-  </div>
-  <div class="chatbot-body">
-    <div class="chatbot-messages" id="chatbotMessages">
-      <div class="chatbot-message bot">
-        <div class="chatbot-message-content">
-          <strong>Welcome to BrightWave Dental!</strong><br>
-          We're here to help you achieve your perfect smile. Our friendly team is ready to assist with any questions or appointment bookings.
-        </div>
-      </div>
-    </div>
-    <div class="chatbot-services">
-      <h5>Quick Options - Click a service:</h5>
-      <div class="chatbot-service-list">
-        <button class="chatbot-service-tag" onclick="sendServiceMessage('I\'m interested in Teeth Whitening')">Teeth Whitening</button>
-        <button class="chatbot-service-tag" onclick="sendServiceMessage('I\'m interested in Dental Implants')">Dental Implants</button>
-        <button class="chatbot-service-tag" onclick="sendServiceMessage('I\'m interested in Veneers')">Veneers</button>
-        <button class="chatbot-service-tag" onclick="sendServiceMessage('I\'m interested in Crowns')">Crowns</button>
-        <button class="chatbot-service-tag" onclick="sendServiceMessage('I\'m interested in Orthodontics')">Orthodontics</button>
-        <button class="chatbot-service-tag" onclick="sendServiceMessage('I have a Dental Emergency')">Emergency Care</button>
-      </div>
-    </div>
-    <div class="chatbot-input-area">
-      <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type your message here..." />
-      <button class="chatbot-send" onclick="sendChatMessage()">
-        <i class="fa-solid fa-paper-plane"></i>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- WhatsApp Chatbot -->
-<a href="https://wa.me/27679707137?text=Hi%20BrightWave%20Dental!%20I'd%20like%20to%20book%20an%20appointment." 
-   class="whatsapp-btn" 
-   target="_blank" 
-   rel="noopener noreferrer"
-   aria-label="Chat with us on WhatsApp">
-  <i class="fa-brands fa-whatsapp"></i>
-  <span class="whatsapp-tooltip">Chat with us</span>
-</a>
-
-<script>
-  // Chatbot toggle functionality
-  const chatbotToggle = document.getElementById('chatbotToggle');
-  const chatbotWidget = document.getElementById('chatbotWidget');
-  const chatbotClose = document.getElementById('chatbotClose');
-  const chatbotBadge = document.querySelector('.chatbot-badge');
-  const chatbotInput = document.getElementById('chatbotInput');
-
-  // Open chatbot
-  chatbotToggle.addEventListener('click', () => {
-    chatbotWidget.classList.add('active');
-    chatbotBadge.style.display = 'none';
-  });
-
-  // Close chatbot
-  chatbotClose.addEventListener('click', () => {
-    chatbotWidget.classList.remove('active');
-  });
-
-  // Close when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!chatbotWidget.contains(e.target) && !chatbotToggle.contains(e.target)) {
-      chatbotWidget.classList.remove('active');
-    }
-  });
-
-  // Show badge animation on page load
-  setTimeout(() => {
-    chatbotToggle.style.transform = 'scale(1.1)';
-    setTimeout(() => {
-      chatbotToggle.style.transform = 'scale(1)';
-    }, 300);
-  }, 2000);
-
-  const chatbotMessages = document.getElementById('chatbotMessages');
-
-  // Bot responses database
-  const botResponses = {
-    'teeth whitening': 'Our professional teeth whitening can brighten your smile by several shades in just one visit. Would you like to schedule a consultation?',
-    'whitening': 'Our professional teeth whitening can brighten your smile by several shades in just one visit. Would you like to schedule a consultation?',
-    'implants': 'Dental implants are a permanent solution for missing teeth. We use high-quality materials for natural-looking results. Shall we book a consultation to discuss your options?',
-    'veneers': 'Porcelain veneers can transform your smile by covering imperfections. They\'re thin, durable, and look completely natural. Interested in learning more?',
-    'crowns': 'We offer zirconia crowns that are both strong and beautiful. They\'re perfect for restoring damaged teeth. Would you like to discuss this option?',
-    'orthodontics': 'We provide clear aligners for discreet teeth straightening. No metal braces needed! Would you like to know if you\'re a candidate?',
-    'emergency': 'Dental emergencies require immediate attention. If you\'re experiencing severe pain, please call us directly at +27 67 970 7137 or click the WhatsApp button for urgent care.',
-    'pain': 'I\'m sorry to hear you\'re in pain. For dental emergencies, please call us immediately at +27 67 970 7137 or use the WhatsApp button for quick assistance.',
-    'appointment': 'I\'d be happy to help you book an appointment! Please provide your preferred date and time, and we\'ll check our availability.',
-    'book': 'I\'d be happy to help you book an appointment! Please provide your preferred date and time, and we\'ll check our availability.',
-    'consultation': 'Consultations are free for new patients! We\'ll assess your needs and create a personalized treatment plan. When would you like to come in?',
-    'price': 'Our prices vary depending on the treatment. We offer transparent pricing and payment plans. Would you like to schedule a free consultation to discuss costs?',
-    'cost': 'Our prices vary depending on the treatment. We offer transparent pricing and payment plans. Would you like to schedule a free consultation to discuss costs?',
-    'insurance': 'We accept most major insurance plans. Please bring your insurance card to your appointment, and we\'ll help you with the claims process.',
-    'hours': 'We\'re open Monday–Friday: 08:00–17:00 and Saturday: 08:00–13:00. We\'re closed on Sundays.',
-    'location': 'We\'re located at 14 Seabreeze Lane, Suite 2B, Durban North, 4001. Free parking is available!',
-    'address': 'We\'re located at 14 Seabreeze Lane, Suite 2B, Durban North, 4001. Free parking is available!',
-    'default': 'Thank you for your message! One of our team members will assist you shortly. In the meantime, would you like to know more about our services or book an appointment?'
-  };
-
-  function getBotResponse(message) {
-    const lowerMessage = message.toLowerCase();
-    for (const keyword in botResponses) {
-      if (lowerMessage.includes(keyword)) {
-        return botResponses[keyword];
-      }
-    }
-    return botResponses['default'];
-  }
-
-  function addMessage(text, isUser = false) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `chatbot-message ${isUser ? 'user' : 'bot'}`;
-    messageDiv.innerHTML = `<div class="chatbot-message-content">${text}</div>`;
-    chatbotMessages.appendChild(messageDiv);
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-  }
-
-  function sendChatMessage() {
-    const message = chatbotInput.value.trim();
-    if (message) {
-      addMessage(message, true);
-      chatbotInput.value = '';
-      
-      // Simulate bot typing delay
-      setTimeout(() => {
-        const response = getBotResponse(message);
-        addMessage(response, false);
-      }, 800);
-    } else {
-      chatbotInput.focus();
-      chatbotInput.style.borderColor = '#ff4757';
-      setTimeout(() => {
-        chatbotInput.style.borderColor = '';
-      }, 1000);
-    }
-  }
-
-  function sendServiceMessage(serviceText) {
-    addMessage(serviceText, true);
-    
-    setTimeout(() => {
-      const response = getBotResponse(serviceText);
-      addMessage(response, false);
-    }, 800);
-  }
-
-  // Send on Enter key
-  chatbotInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      sendChatMessage();
-    }
-  });
 </script>
+<!-- Add this right before the </body> tag -->
+  <elevenlabs-convai agent-id="agent_5701kr3mrgfbfbess4hx8mqkvmd0"></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
 
 </body>
 </html>
